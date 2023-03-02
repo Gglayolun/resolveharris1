@@ -1,0 +1,59 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  creationTimestamp: null
+  labels:
+    infinity.application/applicationName: fdsg
+    infinity.application/deploymentNo: fdsg-DP1
+    infinity.application/revision: 2023.03.1
+  name: fdsg
+  namespace: uat
+spec:
+  components:
+  - name: fdsg-erqdsaf-api
+    properties:
+      addRevisionLabel: false
+      args:
+      - eqwqr
+      cpu: "0.5"
+      exposeType: ClusterIP
+      hostAliases:
+      - hostnames:
+        - rewi111
+        ip: 12asfip
+      image: nginx
+      imagePullPolicy: IfNotPresent
+      imagePullSecrets:
+      - qw1!!
+      memory: 1024Mi
+      ports:
+      - expose: true
+        port: 80
+        protocol: TCP
+    traits:
+    - properties:
+        replicas: 1
+      type: scaler
+    - type: storage
+    - properties:
+        class: nginx
+        classInSpec: false
+        http:
+          /: 77
+      type: gateway
+    type: webservice
+  policies:
+  - name: topology-clusters
+    properties:
+      clusters:
+      - local
+    type: topology
+  workflow:
+    steps:
+    - name: deploy
+      properties:
+        ignoreTerraformComponent: false
+        policies:
+        - topology-clusters
+      type: deploy
+status: {}
