@@ -19,6 +19,13 @@ spec:
         name: http
         port: 80
         protocol: TCP
+    traits:
+    - properties:
+        class: nginx
+        classInSpec: false
+        http:
+          /: 80
+      type: gateway
     type: webservice
   policies:
   - name: topology-clusters
