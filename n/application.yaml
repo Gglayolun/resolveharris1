@@ -1,0 +1,53 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  creationTimestamp: null
+  labels:
+    infinity.application/applicationName: harrn
+    infinity.application/deploymentNo: harrn-DP1
+    infinity.application/revision: 2023.03.1
+  name: harrn
+  namespace: uat
+spec:
+  components:
+  - name: harrn-asd-api
+    properties:
+      addRevisionLabel: false
+      cpu: "0.5"
+      exposeType: ClusterIP
+      image: nginx
+      imagePullPolicy: IfNotPresent
+      memory: 200Mi
+      ports:
+      - expose: true
+        name: http
+        nodePort: 80
+        port: 80
+        protocol: TCP
+    traits:
+    - properties:
+        replicas: 1
+      type: scaler
+    - properties:
+        class: nginx
+        classInSpec: false
+        http:
+          /: 80
+      type: gateway
+    - type: storage
+    type: webservice
+  policies:
+  - name: topology-clusters
+    properties:
+      clusters:
+      - local
+    type: topology
+  workflow:
+    steps:
+    - name: deploy
+      properties:
+        ignoreTerraformComponent: false
+        policies:
+        - topology-clusters
+      type: deploy
+status: {}
