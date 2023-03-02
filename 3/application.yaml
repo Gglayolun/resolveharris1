@@ -1,0 +1,38 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  creationTimestamp: null
+  labels:
+    infinity.application/applicationName: harr1
+    infinity.application/deploymentNo: harr1-DP2
+    infinity.application/revision: 2023.03.2
+  name: harr1
+  namespace: uat
+spec:
+  components:
+  - name: harr1-harr1-k8s
+    properties:
+      chart: hello-world
+      installTimeout: 10m
+      interval: 30s
+      pullInterval: 5m
+      repoType: helm
+      retries: 3
+      url: https://helm.github.io/examples
+      version: 0.1.0
+    type: helm
+  policies:
+  - name: topology-clusters
+    properties:
+      clusters:
+      - local
+    type: topology
+  workflow:
+    steps:
+    - name: deploy
+      properties:
+        ignoreTerraformComponent: false
+        policies:
+        - topology-clusters
+      type: deploy
+status: {}
