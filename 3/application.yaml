@@ -1,11 +1,14 @@
 apiVersion: core.oam.dev/v1beta1
 kind: Application
 metadata:
+  annotations:
+    application.deploy.reform/commitHash: 0357df46d80965354c4b193caad8d07e7f376745
+    application.deploy.reform/deploymentNo: harr1-DP7
+    application.deploy.reform/name: harr1
+    application.deploy.reform/revision: 2023.03.7
+    deploy.reform/domain: reslv.io
+    deploy.reform/version: a463dd478a21f2dc41a8ad45a1a54019222c6b94
   creationTimestamp: null
-  labels:
-    infinity.application/applicationName: harr1
-    infinity.application/deploymentNo: harr1-DP2
-    infinity.application/revision: 2023.03.2
   name: harr1
   namespace: uat
 spec:
