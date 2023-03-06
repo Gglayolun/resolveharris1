@@ -1,0 +1,51 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  annotations:
+    application.deploy.reform/commitHash: b7d0a7d5e61192d2a41d8ec65e9d76c777d71fdd
+    application.deploy.reform/deploymentNo: ware2131-DP2
+    application.deploy.reform/name: ware2131
+    application.deploy.reform/revision: 2023.03.2
+    deploy.reform/domain: reslv.io
+    deploy.reform/version: a463dd478a21f2dc41a8ad45a1a54019222c6b94
+  creationTimestamp: null
+  name: ware2131
+  namespace: uat
+spec:
+  components:
+  - name: ware2131-we-api
+    properties:
+      addRevisionLabel: false
+      cpu: "0.5"
+      exposeType: ClusterIP
+      image: ngnix
+      imagePullPolicy: IfNotPresent
+      memory: 200Mi
+      ports:
+      - expose: true
+        name: http
+        port: 80
+        protocol: TCP
+    traits:
+    - properties:
+        class: nginx
+        classInSpec: false
+        http:
+          /: 80
+      type: gateway
+    type: webservice
+  policies:
+  - name: topology-clusters
+    properties:
+      clusters:
+      - local
+    type: topology
+  workflow:
+    steps:
+    - name: deploy
+      properties:
+        ignoreTerraformComponent: false
+        policies:
+        - topology-clusters
+      type: deploy
+status: {}
